@@ -144,7 +144,7 @@ public abstract class BubbleMessageBox extends MessageBox {
         dateTime = new Label();
         dateTime.getStyleClass().addAll("text-fill-grey-dimmed", "font-size-09", "font-light");
         dateTime.setText(item.getDate());
-        dateTime.setVisible(false);
+        showDateTime(false);
     }
 
     private void setUpUserProfileIcon() {
@@ -230,14 +230,22 @@ public abstract class BubbleMessageBox extends MessageBox {
             if ((moreActionsMenu != null && moreActionsMenu.getIsMenuShowing().get()) || reactMenuBox.getIsMenuShowing().get()) {
                 return;
             }
-            dateTime.setVisible(true);
+            showDateTime(true);
             showActionsHBox();
         } else {
             if ((moreActionsMenu == null || !moreActionsMenu.getIsMenuShowing().get()) && !reactMenuBox.getIsMenuShowing().get()) {
-                dateTime.setVisible(false);
+                showDateTime(false);
                 actionsHBox.setVisible(false);
             }
         }
+    }
+
+    protected void showDateTime(boolean shouldShow) {
+        dateTime.setVisible(shouldShow || isAlwaysShowChatTimestamps());
+    }
+
+    protected boolean isAlwaysShowChatTimestamps() {
+        return false;
     }
 
     protected void showActionsHBox() {

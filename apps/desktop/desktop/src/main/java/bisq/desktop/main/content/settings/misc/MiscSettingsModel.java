@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 public class MiscSettingsModel implements Model {
     private final BooleanProperty useAnimations = new SimpleBooleanProperty();
+    private final BooleanProperty alwaysShowChatTimestamps = new SimpleBooleanProperty();
     private final BooleanProperty preventStandbyMode = new SimpleBooleanProperty();
 
     private final DoubleProperty difficultyAdjustmentFactor = new SimpleDoubleProperty();

@@ -206,6 +206,11 @@ public final class MyTextMessageBox extends BubbleMessageBox {
         actionsHBox.setVisible(!editButtonsHBox.isVisible());
     }
 
+    @Override
+    protected boolean isAlwaysShowChatTimestamps() {
+        return controller.isAlwaysShowChatTimestamps();
+    }
+
     private void onEditMessage() {
         actionsHBox.setVisible(false);
         editInputField.setVisible(true);

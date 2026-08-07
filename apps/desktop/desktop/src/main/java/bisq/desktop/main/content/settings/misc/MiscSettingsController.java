@@ -40,7 +40,7 @@ public class MiscSettingsController implements Controller {
     private final SettingsService settingsService;
     private final DifficultyAdjustmentService difficultyAdjustmentService;
     private final DontShowAgainService dontShowAgainService;
-    private Pin useAnimationsPin, preventStandbyModePin, ignoreDiffAdjustmentFromSecManagerPin,
+    private Pin useAnimationsPin, alwaysShowChatTimestampsPin, preventStandbyModePin, ignoreDiffAdjustmentFromSecManagerPin,
             mostRecentDifficultyAdjustmentFactorOrDefaultPin, difficultyAdjustmentFactorPin, totalMaxBackupSizeInMBPin,
             addContactsAutomaticallyPin;
     private Subscription difficultyAdjustmentFactorDescriptionTextPin;
@@ -57,6 +57,8 @@ public class MiscSettingsController implements Controller {
     public void onActivate() {
         useAnimationsPin = FxBindings.bindBiDir(model.getUseAnimations())
                 .to(settingsService.getUseAnimations(), settingsService::setUseAnimations);
+        alwaysShowChatTimestampsPin = FxBindings.bindBiDir(model.getAlwaysShowChatTimestamps())
+                .to(settingsService.getAlwaysShowChatTimestamps(), settingsService::setAlwaysShowChatTimestamps);
         preventStandbyModePin = FxBindings.bindBiDir(model.getPreventStandbyMode())
                 .to(settingsService.getPreventStandbyMode(), settingsService::setPreventStandbyMode);
 
@@ -93,6 +95,7 @@ public class MiscSettingsController implements Controller {
     @Override
     public void onDeactivate() {
         useAnimationsPin.unbind();
+        alwaysShowChatTimestampsPin.unbind();
         preventStandbyModePin.unbind();
 
         ignoreDiffAdjustmentFromSecManagerPin.unbind();

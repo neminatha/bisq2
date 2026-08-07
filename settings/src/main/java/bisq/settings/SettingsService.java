@@ -133,6 +133,7 @@ public class SettingsService extends RateLimitedPersistenceClient<SettingsStore>
         pins.add(getMuSigLastSelectedOtherMarket().addObserver(value -> persist()));
         pins.add(getSelectedWalletMarket().addObserver(value -> persist()));
         pins.add(getShowLatestTxs().addObserver(value -> persist()));
+        pins.add(getAlwaysShowChatTimestamps().addObserver(value -> persist()));
 
         isInitialized = true;
         return favouriteMarketsService.initialize();
@@ -320,6 +321,9 @@ public class SettingsService extends RateLimitedPersistenceClient<SettingsStore>
         return persistableStore.showLatestTxs;
     }
 
+    public ReadOnlyObservable<Boolean> getAlwaysShowChatTimestamps() {
+        return persistableStore.alwaysShowChatTimestamps;
+    }
 
     /* --------------------------------------------------------------------- */
     // Setters
@@ -467,6 +471,9 @@ public class SettingsService extends RateLimitedPersistenceClient<SettingsStore>
         persistableStore.showLatestTxs.set(showLatestTxs);
     }
 
+    public void setAlwaysShowChatTimestamps(boolean alwaysShowChatTimestamps) {
+        persistableStore.alwaysShowChatTimestamps.set(alwaysShowChatTimestamps);
+    }
 
     /* --------------------------------------------------------------------- */
     // DontShowAgainMap

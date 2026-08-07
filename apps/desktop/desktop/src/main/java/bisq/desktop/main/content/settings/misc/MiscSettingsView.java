@@ -41,7 +41,7 @@ public class MiscSettingsView extends View<VBox, MiscSettingsModel, MiscSettings
     private static final double TEXT_FIELD_WIDTH = 500;
 
     private final Button resetDontShowAgain;
-    private final Switch useAnimations, preventStandbyMode, addContactsAutomatically;
+    private final Switch useAnimations, alwaysShowChatTimestamps, preventStandbyMode, addContactsAutomatically;
     private final MaterialTextField totalMaxBackupSizeInMB;
 
     public MiscSettingsView(MiscSettingsModel model, MiscSettingsController controller) {
@@ -51,12 +51,13 @@ public class MiscSettingsView extends View<VBox, MiscSettingsModel, MiscSettings
         Label displayHeadline = SettingsViewUtils.getHeadline(Res.get("settings.display.headline"));
 
         useAnimations = new Switch(Res.get("settings.display.useAnimations"));
+        alwaysShowChatTimestamps = new Switch(Res.get("settings.display.alwaysShowChatTimestamps"));
         preventStandbyMode = new Switch(Res.get("settings.display.preventStandbyMode"));
         resetDontShowAgain = new Button(Res.get("settings.display.resetDontShowAgain"));
         resetDontShowAgain.getStyleClass().add("grey-transparent-outlined-button");
 
         VBox.setMargin(resetDontShowAgain, new Insets(10, 0, 0, 0));
-        VBox displayVBox = new VBox(10, useAnimations, preventStandbyMode, resetDontShowAgain);
+        VBox displayVBox = new VBox(10, useAnimations, alwaysShowChatTimestamps, preventStandbyMode, resetDontShowAgain);
 
         // Backup settings
         Label backupHeadline = SettingsViewUtils.getHeadline(Res.get("settings.backup.headline"));
@@ -91,6 +92,7 @@ public class MiscSettingsView extends View<VBox, MiscSettingsModel, MiscSettings
     @Override
     protected void onViewAttached() {
         useAnimations.selectedProperty().bindBidirectional(model.getUseAnimations());
+        alwaysShowChatTimestamps.selectedProperty().bindBidirectional(model.getAlwaysShowChatTimestamps());
         preventStandbyMode.selectedProperty().bindBidirectional(model.getPreventStandbyMode());
         resetDontShowAgain.setOnAction(e -> controller.onResetDontShowAgain());
 
@@ -104,6 +106,7 @@ public class MiscSettingsView extends View<VBox, MiscSettingsModel, MiscSettings
     @Override
     protected void onViewDetached() {
         useAnimations.selectedProperty().unbindBidirectional(model.getUseAnimations());
+        alwaysShowChatTimestamps.selectedProperty().unbindBidirectional(model.getAlwaysShowChatTimestamps());
         preventStandbyMode.selectedProperty().unbindBidirectional(model.getPreventStandbyMode());
         resetDontShowAgain.setOnAction(null);
 

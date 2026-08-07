@@ -100,6 +100,7 @@ public final class SettingsStore implements PersistableStore<SettingsStore> {
     final Observable<Market> muSigLastSelectedOtherMarket = new Observable<>();
     final Observable<Market> selectedWalletMarket = new Observable<>();
     final Observable<Boolean> showLatestTxs = new Observable<>();
+    final Observable<Boolean> alwaysShowChatTimestamps = new Observable<>();
 
     SettingsStore() {
         this(new Cookie(),
@@ -138,7 +139,8 @@ public final class SettingsStore implements PersistableStore<SettingsStore> {
                 MarketRepository.getDefaultBtcFiatMarket(),
                 MarketRepository.getDefaultCryptoBtcMarket(),
                 MarketRepository.getDefaultBtcFiatMarket(),
-                true);
+                true,
+                false);
     }
 
     SettingsStore(Cookie cookie,
@@ -177,7 +179,8 @@ public final class SettingsStore implements PersistableStore<SettingsStore> {
                   Market muSigLastSelectedFiatMarket,
                   Market muSigLastSelectedOtherMarket,
                   Market selectedWalletMarket,
-                  boolean showLatestTxs) {
+                  boolean showLatestTxs,
+                  boolean alwaysShowChatTimestamps) {
         this.cookie = cookie;
         this.dontShowAgainMap.putAll(dontShowAgainMap);
         this.useAnimations.set(useAnimations);
@@ -215,6 +218,7 @@ public final class SettingsStore implements PersistableStore<SettingsStore> {
         this.muSigLastSelectedOtherMarket.set(muSigLastSelectedOtherMarket);
         this.selectedWalletMarket.set(selectedWalletMarket);
         this.showLatestTxs.set(showLatestTxs);
+        this.alwaysShowChatTimestamps.set(alwaysShowChatTimestamps);
     }
 
     @SuppressWarnings("deprecation")
@@ -259,7 +263,8 @@ public final class SettingsStore implements PersistableStore<SettingsStore> {
                 .setMuSigLastSelectedFiatMarket(muSigLastSelectedFiatMarket.get().toProto(serializeForHash))
                 .setMuSigLastSelectedOtherMarket(muSigLastSelectedOtherMarket.get().toProto(serializeForHash))
                 .setSelectedWalletMarket(selectedWalletMarket.get().toProto(serializeForHash))
-                .setShowLatestTxs(showLatestTxs.get());
+                .setShowLatestTxs(showLatestTxs.get())
+                .setAlwaysShowChatTimestamps(alwaysShowChatTimestamps.get());
     }
 
     @Override
@@ -344,7 +349,8 @@ public final class SettingsStore implements PersistableStore<SettingsStore> {
                 proto.hasSelectedWalletMarket()
                         ? Market.fromProto(proto.getSelectedWalletMarket())
                         : MarketRepository.getDefaultBtcFiatMarket(),
-                proto.getShowLatestTxs());
+                proto.getShowLatestTxs(),
+                proto.getAlwaysShowChatTimestamps());
     }
 
     @Override
@@ -396,7 +402,8 @@ public final class SettingsStore implements PersistableStore<SettingsStore> {
                 muSigLastSelectedFiatMarket.get(),
                 muSigLastSelectedOtherMarket.get(),
                 selectedWalletMarket.get(),
-                showLatestTxs.get());
+                showLatestTxs.get(),
+                alwaysShowChatTimestamps.get());
     }
 
     @Override
@@ -440,6 +447,7 @@ public final class SettingsStore implements PersistableStore<SettingsStore> {
             muSigLastSelectedOtherMarket.set(persisted.muSigLastSelectedOtherMarket.get());
             selectedWalletMarket.set(persisted.selectedWalletMarket.get());
             showLatestTxs.set(persisted.showLatestTxs.get());
+            alwaysShowChatTimestamps.set(persisted.alwaysShowChatTimestamps.get());
         } catch (Exception e) {
             log.error("Exception at applyPersisted", e);
         }

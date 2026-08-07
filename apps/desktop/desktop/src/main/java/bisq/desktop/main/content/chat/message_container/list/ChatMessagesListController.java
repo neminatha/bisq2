@@ -1079,4 +1079,8 @@ public class ChatMessagesListController implements Controller {
             model.setHasExpiredMessagesIndicator(true);
         }
     }
+
+    public boolean isAlwaysShowChatTimestamps() {
+        return settingsService.getAlwaysShowChatTimestamps().get() == Boolean.TRUE;
+    }
 }

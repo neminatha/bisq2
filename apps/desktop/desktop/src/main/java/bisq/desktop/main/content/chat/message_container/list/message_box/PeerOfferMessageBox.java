@@ -58,6 +58,11 @@ public final class PeerOfferMessageBox extends PeerTextMessageBox {
     }
 
     @Override
+    protected boolean isAlwaysShowChatTimestamps() {
+        return false;
+    }
+
+    @Override
     protected void setUpActions() {
         super.setUpActions();
 

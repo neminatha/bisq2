@@ -56,6 +56,11 @@ public class PeerTextMessageBox extends BubbleMessageBox {
     }
 
     @Override
+    protected boolean isAlwaysShowChatTimestamps() {
+        return controller.isAlwaysShowChatTimestamps();
+    }
+
+    @Override
     protected void setUpUserNameAndDateTime() {
         super.setUpUserNameAndDateTime();
 
@@ -107,7 +112,7 @@ public class PeerTextMessageBox extends BubbleMessageBox {
 
         isMenuShowingPin = EasyBind.subscribe(moreActionsMenu.getIsMenuShowing(), isShowing -> {
            if (!isShowing && !isHover()) {
-               dateTime.setVisible(false);
+               showDateTime(false);
                actionsHBox.setVisible(false);
            }
         });
